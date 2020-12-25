@@ -49,4 +49,13 @@ app.get('/profile', (req, res)=>{
     })
 })
 
+app.get('/list',(req,res)=>{
+    User.find({},'username email').then((doc)=>{
+        res.json({status:true, data: doc});
+    }).catch(err => {
+        res.json({status:false});
+        console.log(err);
+    })
+})
+
 module.exports = app;
