@@ -14,6 +14,30 @@ var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true
+    },
+    streak: {
+        type: Number,
+        default: 0
+    },
+    country: {
+        type: String,
+        default: ""
+    },
+    institution: {
+        type: String,
+        default: ""
+    },
+    dailyQuestion: {
+        type: Boolean,
+        default: false
+    },
+    UpsolveQuestion: {
+        type: Number,
+        default: 0
+    },
+    UpsolveStreak: {
+        type: Object,
+        default:{}
     }
 });
 

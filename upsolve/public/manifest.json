@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
+  "short_name": "Upsolve",
   "name": "Create React App Sample",
+  "description": "Help to be a better coder...",
   "icons": [
     {
       "src": "favicon.ico",
