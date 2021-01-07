@@ -319,12 +319,12 @@ function  ProfilePage(props) {
         
             </div> 
 
-            <div className="row card-box col-12 mb-4">
+            <div className="row card-box col-12 mb-4 exp-box">
                 <div>
                         <h5 class="mb-4 text-uppercase"><i class="mdi mdi-briefcase mr-1"></i>
                             Experience</h5>
         
-                            <ul class="list-unstyled timeline-sm" style={{maxHeight: "1000px",overflow:"scroll"}}>
+                            <ul class="list-unstyled timeline-sm" style={{maxHeight: "100%",overflowY:"scroll"}}>
                                 <li>
                                 
                                         <div className="row mb-2 ml-3 p-1 pr-1 pl-2 p-lg-2 p-md-2 offset-md-1 offset-lg-1" style={{backgroundColor: "#f1f5f7",borderColor: "#dee2e6",fontSize: "1rem",fontFamily: "open-sans",fontWeight: "600",color: "#6c757d"}}>

@@ -31,7 +31,7 @@ function LoginPage() {
         <div>
 
             <NavigationMenu></NavigationMenu>
-            {error ? 
+            {error === true ? 
             <div className="alert-heading text-center p-1 m-auto bg-danger text-light alert-animation" style={{width: "30%",borderRadius: "5px","fontSize": "1.2rem"}}>
                 Incorrect Credentials
             </div> 
@@ -49,9 +49,10 @@ function LoginPage() {
                     </div>
                     <button className="shadow" onClick={async () => {
                         setisLoading(true);
-                        let result = await loginProcess(username,password,setError)
+                        let result = await loginProcess(username,password)
                         setisLoading(false);
                         if(!result || result === false){
+                            console.log("Error", result)
                             setError(true);
                             setTimeout(() => {
                                 setError(false);

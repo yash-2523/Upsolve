@@ -11,12 +11,12 @@ function TokenAuthentication() {
     return payload;
 }
 
-function loginProcess(username,password,setError) {
+function loginProcess(username,password) {
     
     // if(!username || !password){
     //     return;
     // }
-    fetch('http://localhost:4000/api/users/login',{
+    return fetch('http://localhost:4000/api/users/login',{
         method: "post",
         headers:{
             "Content-Type": "application/json"
@@ -36,6 +36,19 @@ function loginProcess(username,password,setError) {
         }
     });
 }  
+
+function getFirstName(username) {
+    return fetch('https://codeforces.com/api/user.info?handles='+username).then(res => res.json()).then(users=> {
+        if(users.status==="OK"){
+            return users.result[0].firstName;
+        }else{
+            return false;
+        }
+    }).catch(err => {
+        console.log(err);
+        return false;
+    })
+}
 
 function logout() {
     window.localStorage.removeItem("token");
