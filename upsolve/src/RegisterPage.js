@@ -113,7 +113,9 @@ function RegisterPage() {
                                 let result = await getUserByname(username);
                                 console.log(result);
                                 if(!result || result === false){
-                                    // generate opt
+                                    var OTP = Math.ceil(Math.random()*1000000);
+                                    setError("Please Update Your FirstName with "+OTP);
+                                    
                                 }
                                 else{
                                     setisLoading(false);

@@ -23,7 +23,7 @@ app.post('/register', (req, res)=>{
 })
 
 app.post('/login', (req, res)=>{
-    User.findOne({username: req.body.username}).then((doc)=>{
+    User.findOne({username: { $regex: new RegExp("^" + req.body.username.toLowerCase(), "i") }}).then((doc)=>{
         if(doc){
             bcrypt.compare(req.body.password, doc.password).then((check)=>{
                 if(check){
@@ -56,7 +56,7 @@ app.get('/getUser/:id',(req,res)=>{
     User.findById(req.params.id,'dailyQuestion UpsolveQuestion').then((user)=>{res.json(user)}).catch(err => {res.json(false)});
 })
 app.get('/getUserByname/:username',(req,res)=>{
-    User.findOne({username: req.params.username}).then((user)=>{res.json(user)}).catch(err => {res.json(false)});
+    User.findOne({username: { $regex: new RegExp("^" + req.params.username.toLowerCase(), "i") }}).then((user)=>{res.json(user)}).catch(err => {res.json(false)});
 })
 app.get('/updateData',(req,res) => {
     User.updateMany({dailyQuestion: false},{
