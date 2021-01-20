@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import {logout,TokenAuthentication} from './Api/auth.api';
+import {Link} from 'react-router-dom'
 function NavigationMenu() {
 
     const [status,setstatus] = useState(false);
@@ -24,13 +25,13 @@ function NavigationMenu() {
                             </div>
                         </Tooltip>
                     </a>
-                    <a href="#" data-toogle="tooltip" data-palcement="bottom" title={status ? payload?.username : "Login/Register"}>
+                    <Link to={status ? "/profile/"+payload?.username : "/login"}><a href="#" data-toogle="tooltip" data-palcement="bottom" title={status ? payload?.username : "Login/Register"}>
                         <Tooltip title={status ? payload?.username : "Login/Register"} arrow>
                             <div>
                                 <i class="fa fa-user"></i>
                             </div>
                         </Tooltip>
-                    </a>
+                    </a></Link>
                     <a href="#" data-toogle="tooltip" data-palcement="bottom" title="Logout">
                         <Tooltip title="Logout" arrow>
                             <div onClick={() => {logout()}}>

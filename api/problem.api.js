@@ -6,30 +6,28 @@ const User = mongoose.model('user');
 const jwt = require('jsonwebtoken');
 const fetch = require('node-fetch');
 const Problem = mongoose.model('problem');
+const schedule = require('node-schedule');
 
+let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
+    RefillData();
+})
 
-app.get('/refillData', (req,res)=>{
+function RefillData() {
+    
+
     fetch("https://codeforces.com/api/problemset.problems").then(res=>res.json()).then((data)=>{
         if(data.status == "OK"){
-            console.log("Found");
+            
             data.result.problems.map(el=>{
                 el.hash = el.name+el.contestId+el.index;
             })
             Problem.insertMany(data.result.problems);
         }
-        res.json(data);
+        
     })
-});
+}
 
 app.get('/list',(req,res)=>{
-    
-    // if(req.query.country == "any"){
-    //     req.query.country = "";
-        
-    // }
-    // if(req.query.institution == ""){
-    //     req.query.institution = "";
-    // }
     Problem.find({},'name ratings tags contestId index',{skip: parseInt(req.query.skip) || 0,limit: parseInt(req.query.limit) || 10}).then((doc)=>{
         Problem.count().then((count) => {res.json({status:true, data: doc,count})});        
     }).catch(err => {
@@ -65,10 +63,17 @@ app.get('/upsolve/:username', (req,res)=>{
             }
         });
         fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res => res.json()).then((rates)=>{
-            let rating = rates.result[rates.result.length-1].newRating;
-            let ratingStart = rating+100,ratingEnd = rating+300;
+            let rating = rates.result[rates.result.length-1].newRating || 800;
+            if(rating >= 2700){
+                rating = 2300;
+            }
+            let ratingStart = rating+200,ratingEnd = rating+400;
             findAndFilter(res, solved,  ratingStart,ratingEnd);
-        }).catch(err => {res.json(false)});
+        }).catch(err => {
+            let rating = 800;
+            let ratingStart = rating+200,ratingEnd = rating+400;
+            findAndFilter(res, solved, ratingStart,ratingEnd);
+        });
     }).catch(err => {res.json(false)});
     
 })
@@ -84,10 +89,17 @@ app.get('/dailyques/:username', (req,res)=>{
             }
         });
         fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res=>res.json()).then((rates)=>{
-            let rating = rates.result[rates.result.length-1].newRating;
+            let rating = rates.result[rates.result.length-1].newRating || 800;
+            if(rating >= 2700){
+                rating = 2300;
+            }
             let ratingStart = rating-100,ratingEnd = rating+100;
             findAndFilter(res, solved, ratingStart,ratingEnd);
-        }).catch(err => {res.json(false)});
+        }).catch(err => {
+            let rating = 800;
+            let ratingStart = rating,ratingEnd = rating+100;
+            findAndFilter(res, solved, ratingStart,ratingEnd);
+        });
     }).catch(err => {res.json(false)});
     
 })

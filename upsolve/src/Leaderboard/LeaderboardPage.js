@@ -8,11 +8,12 @@ import NavigationMenu from '../NavigationMenu';
 
 function LeaderboardPage() {
     const country_list = require('country-list');
-    const [filter,setfilter] = useState({country:'',institution: '',username:''});
     let countries = [];
     country_list.getNames().map((country) => {
         countries.push(<option value={country}>{country}</option>)
     })
+    const [filter,setfilter] = useState({country:'',institution: '',username:''});
+    
     
     
   return (

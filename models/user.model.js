@@ -10,10 +10,12 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    name: String,
+    name: {
+        type:String,
+        
+    },
     email: {
         type: String,
-        required: true
     },
     streak: {
         type: Number,
@@ -38,7 +40,8 @@ var UserSchema = new mongoose.Schema({
     UpsolveStreak: {
         type: Object,
         default:{}
-    }
+    },
+    bio: String
 });
 
 mongoose.model('user', UserSchema);

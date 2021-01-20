@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import NavigationMenu from './NavigationMenu';
 import BoxTitle from './BoxTitile';
+import {Link} from 'react-router-dom'
 import {loginProcess,getToken,TokenAuthentication} from './Api/auth.api';
 
 
@@ -16,13 +17,14 @@ function LoginPage() {
     // const [username,setusername] = useState("");
     const [error,setError] = useState(false);
     const [isLoading,setisLoading] = useState(false)
-    let username,password;
+    let username="",password="";
 
     useEffect(() => {
         if(getToken()){
             let payload = TokenAuthentication();
             window.location = '/profile/'+payload.username;
         }
+        console.log(username,password)
     },[])
     
     return(
@@ -47,9 +49,12 @@ function LoginPage() {
                         <label for="password">Password:</label>
                         <input type="password" placeholder="Enter Password" onChange={(e)=>{password = e.target.value}}></input>
                     </div>
-                    <button className="shadow" onClick={async () => {
+                    <button className="shadow" onClick={async (e) => {
+                        
                         setisLoading(true);
                         let result = await loginProcess(username,password)
+                        e.target.previousSibling.childNodes[1].value = "";
+                        e.target.previousSibling.childNodes[3].value = "";
                         setisLoading(false);
                         if(!result || result === false){
                             console.log("Error", result)
@@ -60,7 +65,7 @@ function LoginPage() {
                         }
                         
                         }}>{isLoading ? "Logging..." : "Login"}</button>
-                    <a href="">Create New Account</a>
+                    <Link to="/register">Create an Account</Link>
                 </div>
             </div>
 

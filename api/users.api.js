@@ -4,10 +4,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const User = mongoose.model('user');
 const jwt = require('jsonwebtoken');
+const schedule = require('node-schedule');
+
+let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
+    UpdateData();
+})
+
 
 app.post('/register', (req, res)=>{
     var usr = new User(req.body);
-    console.log(req.body);
+    
     bcrypt.hash(usr.password, 9).then((hash)=>{
         usr.password = hash;
         usr.save().then((doc)=>{
@@ -43,7 +49,19 @@ app.post('/login', (req, res)=>{
         }else{
             res.json({status: false, error: "Username Password Doesn't Match..."});
         }
-    })
+    }).catch((err) => {return false})
+})
+
+app.post('/updateuser',(req,res)=>{
+    const user = req.body;
+    User.updateOne({username: user.username},{
+        $set:{
+            name: user.name,
+            country: user.country,
+            institution: user.institution,
+            bio: user.bio
+        }
+    }).then(res => res.json()).then((result,err)=> {res.json(true)}).catch(err => {res.json(false)});
 })
 
 app.get('/profile', (req, res)=>{
@@ -58,20 +76,22 @@ app.get('/getUser/:id',(req,res)=>{
 app.get('/getUserByname/:username',(req,res)=>{
     User.findOne({username: { $regex: new RegExp("^" + req.params.username.toLowerCase(), "i") }}).then((user)=>{res.json(user)}).catch(err => {res.json(false)});
 })
-app.get('/updateData',(req,res) => {
+function UpdateData() {
+    
+
     User.updateMany({dailyQuestion: false},{
         $set:{
             streak: 0
         }
-    }).then((result,err) => {console.log(result)});
+    }).then((result,err) => {});
     User.updateMany({},{
         $set:{
             dailyQuestion: false,
             UpsolveQuestion: 0
         }
-    }).then((result,err) => {console.log(result)});
-    res.json(true)
-})
+    }).then((result,err) => {});
+    
+}
 app.get('/list',(req,res)=>{
     
     if(req.query.country == "any"){

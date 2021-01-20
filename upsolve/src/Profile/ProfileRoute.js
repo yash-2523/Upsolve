@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import NavigationMenu from '../NavigationMenu'
 import {getUserByname} from '../Api/problem.api';
 import ProfilePage from './ProfilePage'
+import {getToken,TokenAuthentication} from '../Api/auth.api'
 
 function ProfileRoute(props) {
     
     const [user,setuser] = useState({});
     const paramUsername = props.match.params.username;
-    
+    const [loggedinUser,setloggedinUser] = useState(false)
     
 
     useEffect(async () => {
@@ -25,7 +26,13 @@ function ProfileRoute(props) {
                 return;
             }
             else{
-                console.log(User);
+                let loggedinUsername = null;
+                if(getToken()){
+                    loggedinUsername = TokenAuthentication().username;      
+                }
+                if(loggedinUsername === User.username){
+                    setloggedinUser(true);
+                }
                 setuser(User);
             }
         })
@@ -38,7 +45,7 @@ function ProfileRoute(props) {
     return (
         <div>
            <NavigationMenu></NavigationMenu> 
-           {user._id ? <ProfilePage user={user}></ProfilePage> : <></>}
+           {user._id ? <ProfilePage user={user} loggedinUser={loggedinUser}></ProfilePage> : <></>}
         </div>
     )
 }

@@ -1,9 +1,12 @@
 
 import fetch from 'node-fetch';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {getUserByname} from './Api/problem.api'
+import {getFirstName,registrationProcess,getToken,TokenAuthentication} from './Api/auth.api'
 import NavigationMenu from './NavigationMenu';
 import BoxTitle from './BoxTitile';
+import {Link} from 'react-router-dom'
+import Countdown from 'react-countdown';
 
 
 
@@ -23,6 +26,37 @@ function RegisterPage() {
     const [institution,setinstitution] = useState("");
     const [bio,setbio] = useState("");
     const [validatePassword,setvalidatePassword] = useState("Please fill out this field");
+    const [optPgae,setoptPage] = useState(false);
+    const [optCode,setoptCode] = useState(false);
+    const [timer,settimer] = useState(0);
+
+
+    useEffect(()=>{
+
+        if(getToken()){
+            let payload = TokenAuthentication();
+            window.location = '/profile/'+payload.username;
+        }
+        
+        if(timer>0){
+            setTimeout(()=> {settimer(timer - 1)},1000);
+        }
+    },[timer])
+
+
+    let init = ()=>{
+        setusername("");
+        setpassword("");
+        setconfirmpassword("");
+        setcountry("");
+        setinstitution("");
+        setbio("");
+        setvalidatePassword("Please fill out this field")
+        setError("");
+        setisLoading(false);
+        setoptCode(false);
+        settimer(0);
+    }
     
     let checkPassword = (e) => {
         let psw = e.target.value;
@@ -54,6 +88,22 @@ function RegisterPage() {
         setvalidatePassword(true);
     }
 
+    const renderer = (timer) => {
+        let minutes = parseInt(timer/60);
+        let seconds = parseInt(timer - (minutes*60));
+        if (timer<=0) {
+          
+          if(optPgae && !isloading){
+            init();
+            setoptPage(false);
+          }
+          return <span>{"00:00"}</span>    
+        }
+        else{ // Render a countdown
+        return <span>{"0"+minutes}:{seconds<10 ? "0"+seconds : seconds}</span>;
+        }
+      };
+
     return(
 
         
@@ -70,8 +120,9 @@ function RegisterPage() {
 
             <div className="box">
                 <BoxTitle title="Register"></BoxTitle>
-                
+                {optPgae === false ?
                 <div className={"box-content-dimension mb-5"+ (isloading ? " loading" : "")}>
+                    
                     <div className="box-form p-4">
                         
                             <div class="form-group">
@@ -102,34 +153,83 @@ function RegisterPage() {
                                 <label>Confirm Password:</label>
                                 <input type="password" class="form-control" onChange={(e) => {setconfirmpassword(e.target.value)}} placeholder="Confrim Password" required />
                                 {confirmpassword === "" ? <div className="text-danger">Please fill out this field.</div> : (confirmpassword !== password ? <div className="text-danger">Should match the password</div> : '')}
-                                {}
+                                
                             </div>
                             
                         
                     </div>
                     <button type="submit" className="shadow" onClick={async () => {
-                                if(validatePassword !== true || username === "" || password !== confirmpassword){return}
-                                setisLoading(true);
-                                let result = await getUserByname(username);
-                                console.log(result);
-                                if(!result || result === false){
-                                    var OTP = Math.ceil(Math.random()*1000000);
-                                    setError("Please Update Your FirstName with "+OTP);
-                                    
-                                }
-                                else{
-                                    setisLoading(false);
-                                    setError("User name already exists");
-                                    
+                        if(validatePassword !== true || username === "" || password !== confirmpassword){return}
+                        setisLoading(true);
+                        let result = await getUserByname(username);
+                        console.log(result);
+                        if(!result || result === false){
+                            var OTP = Math.ceil(Math.random()*1000000);
+                            
+                            
+                            
+                            
+                            settimer(90);
+                            setoptCode(OTP);
+                            setisLoading(false);
+                            setoptPage(true);
+                        }
+                        else{
+                            setisLoading(false);
+                            setError("User name already exists");
+                            
 
-                                    setTimeout(() => {
-                                        setError("");
-                                    },5000)
-                                    return;
-                                }
-                            }}>{isloading ? "Loading..." : "Next"}</button>
+                            setTimeout(() => {
+                                setError("");
+                            },5000)
+                            return;
+                        }
+                    }}>{isloading ? "Loading..." : "Next"}</button>
+
+                            
+                    <Link to="/login">Already Have an account</Link>
+                            
                 </div>
-                
+                :
+                <div className={"box-content-dimension mb-5"+(isloading ? " loading" : "")}>
+                    <h1>{renderer(timer)}</h1>
+                    <p>Change the first name of your codeForces handle to this "{optCode}"(Without Quote).</p>
+                    <button className={isloading ? " loading" : ""} onClick={async () => {
+                        setisLoading(true);
+                        let result = await getFirstName(username);
+                        
+                        if(parseInt(result) !== parseInt(optCode)){
+                            setisLoading(false);
+                            init();
+                            setError("Unable to verify");
+                            setoptPage(false);
+                            setTimeout(() => {
+                                setError("");
+                            },5000)
+                        }
+                        else{
+                            let register = await registrationProcess(username,password,country,institution,bio);
+                            if(!register || register===false){
+                                setisLoading(false);
+                                init();
+                                setError("Unable to Register");
+                                setoptPage(false);
+                            }
+                            else{
+                                setisLoading(false);
+                                init();
+                                setError("");
+                                setoptPage(false)
+                                setTimeout(() => {
+                                    setError("");
+                                },5000)
+                                window.location = "/login";
+                            }
+                        }
+                    }}>{isloading ? "Verifying..." : "Verify"}</button>
+                    <Link to="/login">Already Have an account</Link>
+                </div>
+                }
             </div>
 
             
