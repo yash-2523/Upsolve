@@ -41,6 +41,8 @@ function RegisterPage() {
         if(timer>0){
             setTimeout(()=> {settimer(timer - 1)},1000);
         }
+
+        
     },[timer])
 
 
@@ -127,7 +129,7 @@ function RegisterPage() {
                         
                             <div class="form-group">
                                 <label>Username:</label>
-                                <input type="text" className="form-control" placeholder="Enter codeForces Handle" onChange={(e) => {setusername(e.target.value)}} required />
+                                <input type="text" className="form-control" placeholder="Enter Code-Forces Handle" onChange={(e) => {setusername(e.target.value)}} required />
                                 {username === "" ? <div class="text-danger">Please fill out this field.</div> : ''}
                             </div>
                             <div class="form-group">
@@ -147,7 +149,7 @@ function RegisterPage() {
                             </div>
                             <div class="form-group">
                                 <label>Password:</label>
-                                <input type="password" class="form-control" onChange={(e) => {setpassword(e.target.value);checkPassword(e)}} placeholder="Enter password" required />
+                                <input type="password" class="form-control" onChange={(e) => {setpassword(e.target.value);checkPassword(e)}} placeholder="Enter Password" required />
                                 {validatePassword !== true ? <div class="text-danger">{validatePassword}</div> : ''}
                             </div>
                             <div class="form-group">
@@ -194,7 +196,7 @@ function RegisterPage() {
                 :
                 <div className={"box-content-dimension mb-5"+(isloading ? " loading" : "")}>
                     <h1>{renderer(timer)}</h1>
-                    <p>Change the first name of your codeForces handle to this "<b>{optCode}</b>" (Without Quote).</p>
+                    <p>Change the first name of your codeForces handle to this "<b>{optCode}</b>" (Without Quote). <br></br><strong>{"CodeForces --> Profile --> Settings --> Social --> Change your first name"}</strong></p>
                     <button className={isloading ? " loading" : ""} onClick={async () => {
                         setisLoading(true);
                         let result = await getFirstName(username);

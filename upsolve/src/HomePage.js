@@ -27,7 +27,7 @@ const MarsPlanet = ({position}) => {
     // })
     // useFrame(() => {mesh.current})
     const gltf = useLoader(GLTFLoader, "Mars_1_6792.glb");
-    return <mesh onClick={() => {window.location="/leaderboard"}}><primitive ref={mesh} object={gltf.scene} scale={[0.1,0.1,0.1]} position={position} /></mesh>
+    return <mesh onClick={() => {window.location="/leaderboard"}} onPointerDown={() => {window.location="/leaderboard"}}><primitive ref={mesh} object={gltf.scene} scale={[0.1,0.1,0.1]} position={position} /></mesh>
   };
   const Planet = ({position}) => {
     const mesh = useRef();

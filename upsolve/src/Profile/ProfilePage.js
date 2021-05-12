@@ -2,7 +2,6 @@ import React,{useRef,useState} from 'react';
 // let LineChart = require('react-chartjs').Line
 import Chart from 'react-apexcharts';
 import {updateUser} from '../Api/auth.api';
-import {Link} from 'react-router-dom';
 function  ProfilePage(props) {
 
     const country_list = require('country-list');

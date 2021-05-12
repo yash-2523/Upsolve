@@ -63,20 +63,21 @@ function NavigationMenu() {
                          <></>       
                         }                       
                     </a>
-                    <Link to={status ? "/profile/"+payload?.username : "/login"}><a href="#" data-toogle="tooltip" data-palcement="bottom" title={status ? payload?.username : "Login/Register"}>
+                    <a href={status ? "/profile/"+payload?.username : "/login"} data-toogle="tooltip" data-palcement="bottom" title={status ? payload?.username : "Login/Register"}>
                         <Tooltip title={status ? payload?.username : "Login/Register"} arrow>
                             <div>
                                 <i class="fa fa-user"></i>
                             </div>
                         </Tooltip>
-                    </a></Link>
-                    <a href="#" data-toogle="tooltip" data-palcement="bottom" title="Logout">
+                    </a>
+                    {status && <a href="#" data-toogle="tooltip" data-palcement="bottom" title="Logout">
                         <Tooltip title="Logout" arrow>
                             <div onClick={() => {logout()}}>
                                 <i class="fa fa-sign-out"></i>
                             </div>
                         </Tooltip>
                     </a>
+                    }
                 </div>
             </div>
         </section>
