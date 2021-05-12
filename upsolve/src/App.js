@@ -10,7 +10,7 @@ import ProfileRoute from './Profile/ProfileRoute';
 import RegisterPage from './RegisterPage';
 
 function App() {
-
+    console.log("Hello")
     return(
         <Router>
             <Switch>

@@ -194,7 +194,7 @@ function RegisterPage() {
                 :
                 <div className={"box-content-dimension mb-5"+(isloading ? " loading" : "")}>
                     <h1>{renderer(timer)}</h1>
-                    <p>Change the first name of your codeForces handle to this "{optCode}"(Without Quote).</p>
+                    <p>Change the first name of your codeForces handle to this "<b>{optCode}</b>" (Without Quote).</p>
                     <button className={isloading ? " loading" : ""} onClick={async () => {
                         setisLoading(true);
                         let result = await getFirstName(username);

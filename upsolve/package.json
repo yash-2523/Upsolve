@@ -32,6 +32,7 @@
     "react-globe": "^5.0.2",
     "react-linechart": "^1.1.12",
     "react-paginate": "^7.0.0",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-spring": "^8.0.27",
