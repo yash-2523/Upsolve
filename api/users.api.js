@@ -9,7 +9,7 @@ const schedule = require('node-schedule');
 let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
     UpdateData();
 })
-UpdateData();
+// UpdateData();
 
 app.post('/register', (req, res)=>{
     var usr = new User(req.body);
