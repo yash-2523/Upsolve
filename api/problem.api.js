@@ -12,6 +12,8 @@ let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
     RefillData();
 })
 
+RefillData();
+
 function RefillData() {
     
 
@@ -161,8 +163,8 @@ app.get('/check/:type',(req,res)=>{
                     
                     }).then((result,err) => {})
                 }
-                res.json(true);
-                break;
+                return res.json(true);
+                
             }
         }
         res.json(false);

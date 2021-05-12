@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var url = "mongodb+srv://admin:admin@cluster0.hxyw2.mongodb.net/Upsolve?retryWrites=true&w=majority"
+var url = process.env.MongoUrl
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err)=>{
     if(!err){

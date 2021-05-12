@@ -11,7 +11,7 @@ function Leaderboard(props) {
     
     const [items,setItems] = useState([]);
     const [skip,setskip] = useState(1);
-    const [limit,setlimit] = useState(2);
+    const [limit,setlimit] = useState(5);
     const [count,setcount] = useState(0);
     const [loading,setloading] = useState(true);
     const filter = props.filter;

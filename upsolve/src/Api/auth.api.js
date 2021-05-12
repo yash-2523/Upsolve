@@ -1,4 +1,7 @@
 // import { post } from "../../../api/users.api";
+import {config as cf} from '../constants';
+
+let config = cf.url;
 
 function getToken() {
     return window.localStorage.getItem("token");
@@ -16,7 +19,7 @@ function TokenAuthentication() {
 async function loginProcess(username,password) {
     
     
-    return fetch('http://localhost:4000/api/users/login',{
+    return fetch(config+'/api/users/login',{
         method: "post",
         headers:{
             "Content-Type": "application/json"
@@ -38,7 +41,7 @@ async function loginProcess(username,password) {
 }  
 
 async function updateUser(username,firstName,lastName,country,institution,bio) {
-    return fetch('http://localhost:4000/api/users/updateuser',{
+    return fetch(config+'/api/users/updateuser',{
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -54,7 +57,7 @@ async function updateUser(username,firstName,lastName,country,institution,bio) {
 }
 
 async function registrationProcess(username,password,country,institution,bio) {
-    return fetch('http://localhost:4000/api/users/register',{
+    return fetch(config+'/api/users/register',{
         method: "post",
         headers:{
             "Content-Type": "application/json"

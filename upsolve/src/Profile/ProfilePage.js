@@ -10,7 +10,6 @@ function  ProfilePage(props) {
     country_list.getNames().map((country) => {
         countries.push(<option value={country}>{country}</option>)
     })
-    console.log(props.user);
     const [isloading,setisloading] = useState(false);
     const firstName = useRef(null);
     const lastName = useRef(null);
@@ -135,14 +134,15 @@ function  ProfilePage(props) {
                         <p class="text-muted font-13 mb-3">
                             {props.user.bio ? props.user.bio : "A passionate programmer"}
                         </p>
-                        <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ml-2">{props.user.name || "-"}</span></p>
+                        <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ml-2">{props.user.name ? props.user.name : "-"}</span></p>
         
                         
         
-                        <p class="text-muted mb-2 font-13"><strong>Institution :</strong> <span class="ml-2 ">{props.user.institution || "-"}</span></p>
+                        <p class="text-muted mb-2 font-13"><strong>Institution :</strong> <span class="ml-2 ">{props.user.institution ? props.user.institution : "-"}</span></p>
         
-                        <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span class="ml-2">{props.user.country || "-"}</span></p>
+                        <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span class="ml-2">{props.user.country ? props.user.country : "-"}</span></p>
                         <p class="text-muted mb-1 font-13"><strong>Max-Upsolved :</strong> <span class="ml-2 text-success">{parseInt(maxUpsolved)}</span></p>
+                        <p class="text-muted mb-1 font-13"><strong>Streak :</strong> <span class="ml-2 text-success">{parseInt(props.user.streak ? props.user.streak : "0")}</span></p>
                     </div>
         
                 
@@ -192,14 +192,14 @@ function  ProfilePage(props) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="firstname">First Name</label>
-                                            <input type="text" ref={firstName} class="form-control" id="firstname" defaultValue={props.user.name.split(' ')[0] || ''} />
+                                            <input type="text" ref={firstName} class="form-control" id="firstname" defaultValue={props.user.name ? props.user.name.split(' ')[0] : ''} />
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="lastname">Last Name</label>
-                                            <input type="text" ref={lastName} class="form-control" id="lastname" defaultValue={props.user.name.split(' ')[1] || ''} />
+                                            <input type="text" ref={lastName} class="form-control" id="lastname" defaultValue={props.user.name ? props.user.name.split(' ')[1] : ''} />
                                         </div>
                                     </div> 
                                 </div> 
@@ -207,7 +207,7 @@ function  ProfilePage(props) {
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="userbio">Bio</label>
-                                            <textarea class="form-control" ref={bio} id="userbio" rows="4" defaultValue={props.user.bio || "Write Something About yourself"}></textarea>
+                                            <textarea class="form-control" ref={bio} id="userbio" rows="4" defaultValue={props.user.bio ? props.user.bio : "Write Something About yourself"}></textarea>
                                         </div>
                                     </div> 
                                 </div> 

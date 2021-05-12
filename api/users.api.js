@@ -9,7 +9,7 @@ const schedule = require('node-schedule');
 let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
     UpdateData();
 })
-
+UpdateData();
 
 app.post('/register', (req, res)=>{
     var usr = new User(req.body);
@@ -39,7 +39,7 @@ app.post('/login', (req, res)=>{
                         streak: doc.streak,
                         dailyQuestion: doc.dailyQuestion,
                     }
-                    var token = jwt.sign(payload, "1234");
+                    var token = jwt.sign(payload, process.env.jwtToken);
                     
                     res.json({status: true, token});
                 }else{
@@ -65,7 +65,7 @@ app.post('/updateuser',(req,res)=>{
 })
 
 app.get('/profile', (req, res)=>{
-    var decoded = jwt.verify(req.headers.authorization, "1234");
+    var decoded = jwt.verify(req.headers.authorization, process.env.jwtToken);
     User.findById(decoded._id).then((doc)=>{
         res.json(doc);
     })

@@ -47,10 +47,8 @@ function LeaderboardPage() {
                                 {countries}
                             </select>
                             <label for="institution">Institution: </label>
-                            <select name="institution" onChange={(e)=> {setfilter({...filter,institution:e.target.value})}} class="col-7" id="institution">
+                            <select name="institution" disabled onChange={(e)=> {setfilter({...filter,institution:e.target.value})}} class="col-7" id="institution">
                                 <option value=""></option>
-                                <option value="India">India</option>
-                                <option value="India">India</option>
                             </select>
                             <label for="username">Username: </label>
                             <input type="text" name="username" onChange={(e)=> {setfilter({...filter,username:e.target.value})}} class="col-7" id="username"/>

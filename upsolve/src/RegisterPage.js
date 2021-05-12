@@ -29,7 +29,7 @@ function RegisterPage() {
     const [optPgae,setoptPage] = useState(false);
     const [optCode,setoptCode] = useState(false);
     const [timer,settimer] = useState(0);
-
+    const country_list = require('country-list');
 
     useEffect(()=>{
 
@@ -132,12 +132,13 @@ function RegisterPage() {
                             </div>
                             <div class="form-group">
                                 <label>Country: <select onChange={(e) => {setcountry(e.target.value)}}>
-                                                    <option value="India">India</option>
+                                                    <option value="">--Select--</option>
+                                                    {country_list.getNames().map((ct) => <option value={ct}>{ct}</option>)}
                                                 </select>
                                 </label>
                                 
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style={{display: "none"}}>
                                 <label>Institution: <select onChange={(e) => {setinstitution(e.target.value)}}>
                                                     <option value="India">India</option>
                                                 </select>

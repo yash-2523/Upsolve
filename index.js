@@ -1,7 +1,7 @@
 const express = require('express')
 const compression = require('compression')
 const app = express();
-
+const dotenv = require('dotenv').config();
 const cors = require('cors');
 require('./models')
 const bodyparser = require('body-parser');

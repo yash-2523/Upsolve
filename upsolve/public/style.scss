@@ -166,13 +166,17 @@ $shadows-big:    multiple-box-shadow(100);
     cursor: pointer;
   }
   
-  .back-btn div:hover {
+  .fa-rocket:hover {
     -webkit-transform: rotate(-90deg) scale(1.1, 1.1);
     -webkit-transition: 0.5s ease;
     transition: 0.5s ease;
   }
   
   .nav-items a div i {
+    font-size: 1.5rem;
+    color: white;
+  }
+  .nav-items button div i {
     font-size: 1.5rem;
     color: white;
   }

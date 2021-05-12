@@ -6,6 +6,8 @@ import ReactGlobe from 'react-globe';
 import { BoxBufferGeometry } from 'three';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import UpsolveText from './models/UpsolveText';
+import Tooltip from '@material-ui/core/Tooltip';
+import BoxTitle from './BoxTitile';
 
 
 let radius = 300;
@@ -52,11 +54,12 @@ const MarsPlanet = ({position}) => {
 function HomePage() {
     
     return(
+        <>
         <Canvas 
             style={{width: window.innerWidth,height: window.innerHeight,minWidth: "100vw",minHeight: "100vh"}}
             colorManagement
             shadowMap
-            camera = {{position: [0,20,300], fov: 100,far:5000}}
+            camera = {{position: [0,20,400], fov: 100,far:5000}}
             pixelRatio={Math.min(2,  1)}
 
         >
@@ -80,6 +83,8 @@ function HomePage() {
                 <OrbitControls minPolarAngle={Math.PI / 3} autoRotate></OrbitControls>
             </group>
         </Canvas>
+        
+        </>
     )
 
 }
