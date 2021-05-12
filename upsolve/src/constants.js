@@ -1,8 +1,8 @@
 let dev = {
-    url: "http://localhost:4000",
+    url: "https://up-solve.herokuapp.com",
 }
 let prod = {
-    url: "",
+    url: "https://up-solve.herokuapp.com",
 }
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod;
