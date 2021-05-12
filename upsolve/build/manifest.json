@@ -1,0 +1,26 @@
+{
+  "short_name": "Upsolve",
+  "name": "Upsolve",
+  "description": "Help to be a better coder...",
+  "icons": [
+    {
+      "src": "UpsolveLogo.png",
+      "sizes": "128x128 64x64 32x32 24x24",
+      "type": "image/png"
+    },
+    {
+      "src": "UpsolveLogo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "UpsolveLogo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

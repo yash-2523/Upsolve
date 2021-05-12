@@ -12,19 +12,14 @@ app.use(express.urlencoded({extended: true}));
 
 const api = require('./api')
 
-// app.use(express.static(path.join(__dirname, 'upsolve/build')));
+app.use(express.static(path.join(__dirname, 'upsolve/build')));
 app.use('/api', api)
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'upsolve/build', 'index.html'));
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'upsolve/build', 'index.html'));
+});
 
-// app.get("*", (req, res) => {
-//     let url = path.join(__dirname, 'upsolve/build', 'index.html');
-//     if (!url.startsWith('/api/')) // we're on local windows
-//         url = url.substring(1);
-//    res.sendFile(url);
-//  });
+
 
 
 const PORT = process.env.PORT || 4000;
