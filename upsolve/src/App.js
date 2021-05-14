@@ -8,9 +8,9 @@ import LogoutPage from './LogoutPage';
 import ErrorPage from './ErroPage';
 import ProfileRoute from './Profile/ProfileRoute';
 import RegisterPage from './RegisterPage';
+import AboutPage from './About/AboutPage';
 
 function App() {
-    console.log("Hello")
     return(
         <Router>
             <Switch>
@@ -19,6 +19,7 @@ function App() {
                 <Route exact path="/login" component={LoginPage}></Route>
                 <Route exact path="/register" component={RegisterPage}></Route>
                 <Route exact path="/logout" component={LogoutPage}></Route>
+                <Route exact path="/about" component={AboutPage}></Route>
                 <Route exact path="/profile/:username" component={ProfileRoute}></Route>
                 <Route exact path="/" component={HomePage}></Route>
                 <Route component={ErrorPage}></Route>

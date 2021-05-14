@@ -24,7 +24,7 @@ function NavigationMenu() {
     return (
         <section class="navigation-menu">
             <div class="nav-bar col-12">
-                <p class="text-center">Upsolve</p>
+                <p class="text-center" onClick={() => window.location = "/"} style={{cursor: "pointer"}}>Upsolve</p>
                 <div class="nav-items col-lg-3 col-6 text-center">
                     <a onClick={(e) => {Toggler()}} className="position-relative back-btn" >
                         <Tooltip title="Navigate" arrow>

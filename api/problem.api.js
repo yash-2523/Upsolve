@@ -66,6 +66,9 @@ app.get('/upsolve/:username', (req,res)=>{
         });
         fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res => res.json()).then((rates)=>{
             let rating = rates.result[rates.result.length-1].newRating || 800;
+            if(rating < 800){
+                rating = 800;
+            }
             if(rating >= 2700){
                 rating = 2300;
             }
@@ -92,6 +95,9 @@ app.get('/dailyques/:username', (req,res)=>{
         });
         fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res=>res.json()).then((rates)=>{
             let rating = rates.result[rates.result.length-1].newRating || 800;
+            if(rating < 800){
+                rating = 800;
+            }
             if(rating >= 2700){
                 rating = 2300;
             }
