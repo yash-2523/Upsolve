@@ -10,9 +10,9 @@ export default function Team() {
     description.push(["Jay Mehta","orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."]);
 
     return (
-        <section className="col-12 mt-5">
+        <section className="col-12 mt-5 p-3">
             <h1 className="text-center team-section-title">Team Members</h1>
-            <div className="position-relative py-5 team-parent">
+            <div className="position-relative py-5 mt-5 team-parent">
                 <div className="position-absolute team-title">
                     <h3 className="text-center">{descnum!==0 ? description[descnum - 1][0] : ''}</h3>
                     <p className="text-center">{descnum!==0 ? description[descnum - 1][1] : 'Tap on any image'}</p> 
