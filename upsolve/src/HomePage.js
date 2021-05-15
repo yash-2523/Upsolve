@@ -118,8 +118,8 @@ function HomePage() {
                 position={[0,-10,10]}
                 intensity={1.5}
             ></directionalLight>
-            {/* <pointLight position={[-10,0,-20]} intensity={0.5}></pointLight>
-            <pointLight position={[0,-10,0]} intensity={1.5}></pointLight> */}
+            <pointLight position={[-10,0,-20]} intensity={0.5}></pointLight>
+            <pointLight position={[0,-10,0]} intensity={1.5}></pointLight>
             <group>
                 <Suspense fallback={null}>
                     <UpsolveText></UpsolveText>

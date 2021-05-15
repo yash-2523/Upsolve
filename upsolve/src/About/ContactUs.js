@@ -16,6 +16,9 @@ export default function ContactUs() {
             return;
         }
         let response = await AddFeedback(name.current.value,email.current.value,feedback.current.value);
+        name.current.value = "";
+        email.current.value = "";
+        feedback.current.value = "";
         setloading(false);
     }
 
