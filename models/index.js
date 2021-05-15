@@ -13,3 +13,4 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCrea
 
 require('./user.model');
 require('./Problem.model');
+require('./feedback.model');

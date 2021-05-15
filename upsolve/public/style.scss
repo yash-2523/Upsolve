@@ -281,7 +281,21 @@ $shadows-big:    multiple-box-shadow(100);
       transform: translateX(0%);
     }
   }
+  .feedback-form{
+    input,textarea{
+      border: none;
+      border-bottom: 1px solid cyan;
+      background: transparent;
+      outline: none;
+      padding: 0.4rem;
+      color: white;
 
+      &::placeholder{
+        color: whitesmoke;
+        opacity: 0.5;
+      }
+    }
+  }
   .upsolve-text{
     animation: left-appear 1s ;
   }
