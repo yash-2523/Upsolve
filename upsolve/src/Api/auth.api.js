@@ -22,7 +22,8 @@ async function loginProcess(username,password) {
     return fetch(config+'/api/users/login',{
         method: "post",
         headers:{
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({
             username,password
@@ -44,7 +45,8 @@ async function updateUser(username,firstName,lastName,country,institution,bio) {
     return fetch(config+'/api/users/updateuser',{
         method: "post",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({
             username: username,
@@ -60,7 +62,8 @@ async function registrationProcess(username,password,country,institution,bio) {
     return fetch(config+'/api/users/register',{
         method: "post",
         headers:{
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({
             username,

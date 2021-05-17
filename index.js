@@ -12,7 +12,7 @@ app.use(express.urlencoded({extended: true}));
 
 const api = require('./api')
 
-app.use(express.static(path.join(__dirname, 'upsolve/build')));
+app.use(express.static(path.join(__dirname, 'upsolve','build')));
 app.use('/api', api)
 
 app.get('*', (req, res) => {

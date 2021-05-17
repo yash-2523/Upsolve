@@ -1,14 +1,9 @@
-import React, { useEffect,useState, useRef, Suspense, useMemo } from 'react';
-import {Canvas,useFrame,useLoader,useUpdate} from 'react-three-fiber';
-import {softShadows,MeshWobbleMaterial,OrbitControls,Stars, Circle,Sphere,Text} from '@react-three/drei';
-import {useSpring,a} from 'react-spring/three'
-import ReactGlobe from 'react-globe';
-import { BoxBufferGeometry } from 'three';
+import React, { useEffect,useState, useRef, Suspense } from 'react';
+import {Canvas,useFrame,useLoader} from 'react-three-fiber';
+import {OrbitControls,Stars} from '@react-three/drei';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import UpsolveText from './models/UpsolveText';
-import Tooltip from '@material-ui/core/Tooltip';
-import BoxTitle from './BoxTitile';
-import {logout,TokenAuthentication} from './Api/auth.api';
+import {TokenAuthentication} from './Api/auth.api';
 
 
 let radius = 500;

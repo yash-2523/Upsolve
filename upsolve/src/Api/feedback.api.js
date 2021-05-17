@@ -7,7 +7,8 @@ async function  AddFeedback(name,email,feedback) {
     return fetch(config+'/api/feedback/add',{
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify({
             name: name,

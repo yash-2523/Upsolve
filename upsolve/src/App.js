@@ -1,4 +1,4 @@
-import './App.css';
+import './style.css';
 import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
 import LeaderboardPage from './Leaderboard/LeaderboardPage';
 import Challenge from './Challenge/Challenge'
