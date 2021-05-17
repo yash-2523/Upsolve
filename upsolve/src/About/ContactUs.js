@@ -1,5 +1,6 @@
 import React, { useState,useRef } from 'react'
 import { AddFeedback } from '../Api/feedback.api';
+import {Webhook,MessageBuilder} from 'discord-webhook-node';
 
 export default function ContactUs() {
 
@@ -7,6 +8,9 @@ export default function ContactUs() {
     const name = useRef("");
     const email = useRef("");
     const feedback = useRef("");
+    const hook = new Webhook('https://discord.com/api/webhooks/843801563846934539/wRQ0qTMn-i-6_M4lN2X60O5Q5kE6UMCW3Fk1brDWh0wVBd_QAZzXe5f6rW6FvYsdM-vA');
+    hook.setUsername('Upsolve Feedback');
+    
 
     let HandleSubmit = async (e)=>{
         e.preventDefault();
@@ -16,10 +20,16 @@ export default function ContactUs() {
             return;
         }
         let response = await AddFeedback(name.current.value,email.current.value,feedback.current.value);
+        const msg = new MessageBuilder().setTitle(name.current.value+' has provided a Feedback').addField('Feedback',feedback.current.value).addField('Email',email.current.value)
         name.current.value = "";
         email.current.value = "";
         feedback.current.value = "";
         setloading(false);
+
+        
+
+        hook.send(msg);
+
     }
 
     return (
