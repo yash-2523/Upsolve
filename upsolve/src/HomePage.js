@@ -60,7 +60,7 @@ const About = ({position}) => {
     const gltf = useLoader(GLTFLoader, "about.glb");
     return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location="/about"}} onPointerDown={() => {window.location="/about"}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
   };
-  const Profile = ({position,status,payload}) => {
+  const Profile = ({position}) => {
     const mesh = useRef();
     let i = {
         current: 900
@@ -76,7 +76,7 @@ const About = ({position}) => {
     })
     // useFrame(() => {mesh.current})
     const gltf = useLoader(GLTFLoader, "Profile.glb");
-    return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {status ? (window.location = "/profile/"+payload?.username) : (window.location = "/login")}} onPointerDown={() => {status ? (window.location = "/profile/"+payload?.username) : (window.location = "/login")}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
+    return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location = "/login"}} onPointerDown={() => {window.location = "/login"}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
   };
 
 function UpsolveText(){
@@ -91,17 +91,7 @@ function UpsolveText(){
 
 function HomePage() {
 
-    const [status,setstatus] = useState(false);
-    const [payload,setpayload] =useState(false);
     
-    useEffect(()=>{
-        let payload = TokenAuthentication();
-        if(payload){
-            setstatus(true);
-            setpayload(payload)
-            
-        }
-    },[])
 
 
     return(
@@ -127,7 +117,7 @@ function HomePage() {
                     <UpsolveText></UpsolveText>
                     <Leaderboard position={[radius * Math.cos(2 * Math.PI * (1200) / 1200),-20,radius * Math.sin(2 * Math.PI * (1200) / 1200) - 100]} />
                     
-                    <Profile status={status} payload={payload} position={[radius * Math.cos(2 * Math.PI * (900) / 1200),0,radius * Math.sin(2 * Math.PI * (900) / 1200) - 100]} />
+                    <Profile position={[radius * Math.cos(2 * Math.PI * (900) / 1200),0,radius * Math.sin(2 * Math.PI * (900) / 1200) - 100]} />
                     <Challenge position={[radius * Math.cos(2 * Math.PI * (600) / 1200),-20,radius * Math.sin(2 * Math.PI * (600) / 1200) - 100]} />
                     <About position={[radius * Math.cos(2 * Math.PI * (300) / 1200),-20,radius * Math.sin(2 * Math.PI * (300) / 1200) - 100]} />
 
