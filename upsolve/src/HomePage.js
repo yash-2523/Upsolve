@@ -2,7 +2,6 @@ import React, { useEffect,useState, useRef, Suspense } from 'react';
 import {Canvas,useFrame,useLoader} from 'react-three-fiber';
 import {OrbitControls,Stars} from '@react-three/drei';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import UpsolveText from './models/UpsolveText';
 import {TokenAuthentication} from './Api/auth.api';
 
 
@@ -79,6 +78,13 @@ const About = ({position}) => {
     const gltf = useLoader(GLTFLoader, "Profile.glb");
     return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location=status ? "/profile/"+payload?.username : "/login"}} onPointerDown={() => {window.location=status ? "/profile/"+payload?.username : "/login"}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
   };
+
+function UpsolveText(){
+    const mesh = useRef();  
+    // useFrame(()=>{ mesh.current.rotation.x=-300})
+    const gltf = useLoader(GLTFLoader, "UpsolveText.glb");
+    return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location="/"}} onPointerDown={() => {window.location="/"}}><primitive ref={mesh} object={gltf.scene} scale={[3,3,3]} position={[0,10,0]} /></mesh>
+}
   
 
 
