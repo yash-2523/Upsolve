@@ -1,8 +1,7 @@
-import React, { useEffect,useState, useRef, Suspense } from 'react';
+import React, { useRef, Suspense } from 'react';
 import {Canvas,useFrame,useLoader} from 'react-three-fiber';
 import {OrbitControls,Stars} from '@react-three/drei';
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import {TokenAuthentication} from './Api/auth.api';
 
 
 let radius = 500;
