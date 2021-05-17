@@ -76,7 +76,7 @@ const About = ({position}) => {
     })
     // useFrame(() => {mesh.current})
     const gltf = useLoader(GLTFLoader, "Profile.glb");
-    return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location=status ? "/profile/"+payload?.username : "/login"}} onPointerDown={() => {window.location=status ? "/profile/"+payload?.username : "/login"}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
+    return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {status ? (window.location = "/profile/"+payload?.username) : (window.location = "/login")}} onPointerDown={() => {status ? (window.location = "/profile/"+payload?.username) : (window.location = "/login")}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
   };
 
 function UpsolveText(){
@@ -99,6 +99,7 @@ function HomePage() {
         if(payload){
             setstatus(true);
             setpayload(payload)
+            
         }
     },[])
 
