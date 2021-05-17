@@ -4,7 +4,7 @@ import {config as cf} from '../constants';
 let config = cf.url;
 
 function getToken() {
-    return window.localStorage.getItem("token");
+    return window.localStorage.getItem("token") || false;
 }
 
 function TokenAuthentication() {
@@ -12,7 +12,7 @@ function TokenAuthentication() {
     if(!token){
         return false;
     }
-    let payload =JSON.parse(atob(token.split('.')[1]));
+    let payload = JSON.parse(atob(token.split('.')[1]));
     return payload;
 }
 
