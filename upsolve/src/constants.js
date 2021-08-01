@@ -1,8 +1,8 @@
 let dev = {
-    url: "https://up-solve.herokuapp.com",
+    url: "https://upsolve-backend.vercel.app",
 }
 let prod = {
-    url: "https://up-solve.herokuapp.com",
+    url: "https://upsolve-backend.vercel.app",
 }
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod;
