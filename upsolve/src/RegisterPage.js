@@ -33,10 +33,7 @@ function RegisterPage() {
 
     useEffect(()=>{
 
-        if(getToken()){
-            let payload = TokenAuthentication();
-            window.location = '/profile/'+payload.username;
-        }
+        
         
         if(timer>0){
             setTimeout(()=> {settimer(timer - 1)},1000);
@@ -44,6 +41,13 @@ function RegisterPage() {
 
         
     },[timer])
+
+    useEffect(() => {
+        if(getToken()){
+            let payload = TokenAuthentication();
+            window.location = '/profile/'+payload.username;
+        }
+    },[])
 
 
     let init = ()=>{
@@ -168,10 +172,6 @@ function RegisterPage() {
                         console.log(result);
                         if(!result || result === false){
                             var OTP = Math.ceil(Math.random()*1000000);
-                            
-                            
-                            
-                            
                             settimer(90);
                             setoptCode(OTP);
                             setisLoading(false);
@@ -219,14 +219,9 @@ function RegisterPage() {
                                 setoptPage(false);
                             }
                             else{
+                                window.location="/challenge"
                                 setisLoading(false);
-                                init();
-                                setError("");
-                                setoptPage(false)
-                                setTimeout(() => {
-                                    setError("");
-                                },5000)
-                                window.location = "/login";
+
                             }
                         }
                     }}>{isloading ? "Verifying..." : "Verify"}</button>

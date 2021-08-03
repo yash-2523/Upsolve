@@ -59,24 +59,24 @@ const About = ({position}) => {
     const gltf = useLoader(GLTFLoader, "about.glb");
     return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location="/about"}} onPointerDown={() => {window.location="/about"}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
   };
-//   const Profile = ({position}) => {
-//     const mesh = useRef();
-//     let i = {
-//         current: 900
-//     }
-//     useFrame(() => {
-//         mesh.current.rotation.y -= 0.01;
-//         mesh.current.position.x = (radius * Math.cos(2 * Math.PI * (i.current) / 1200)) ;
-//         mesh.current.position.z = (radius * Math.sin(2 * Math.PI * (i.current) / 1200)) - 100 ;
-//         i.current--;
-//         if(i.current<1){
-//             i.current=1200
-//         }
-//     })
-//     // useFrame(() => {mesh.current})
-//     const gltf = useLoader(GLTFLoader, "Profile.glb");
-//     return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location="/login"}} onPointerDown={() => {window.location="/login"}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
-//   };
+  const Profile = ({position}) => {
+    const mesh = useRef();
+    let i = {
+        current: 900
+    }
+    useFrame(() => {
+        mesh.current.rotation.y -= 0.01;
+        mesh.current.position.x = (radius * Math.cos(2 * Math.PI * (i.current) / 1200)) ;
+        mesh.current.position.z = (radius * Math.sin(2 * Math.PI * (i.current) / 1200)) - 100 ;
+        i.current--;
+        if(i.current<1){
+            i.current=1200
+        }
+    })
+    // useFrame(() => {mesh.current})
+    const gltf = useLoader(GLTFLoader, "Profile.glb");
+    return <mesh onPointerOver={() => document.body.style.cursor = "pointer"} onPointerOut={() => document.body.style.cursor = "default"} onClick={() => {window.location="/login"}} onPointerDown={() => {window.location="/login"}}><primitive ref={mesh} object={gltf.scene} scale={[2,2,2]} position={position} /></mesh>
+  };
 
 function UpsolveText(){
     const mesh = useRef();  
@@ -116,7 +116,7 @@ function HomePage() {
                     <UpsolveText></UpsolveText>
                     <Leaderboard position={[radius * Math.cos(2 * Math.PI * (1200) / 1200),-20,radius * Math.sin(2 * Math.PI * (1200) / 1200) - 100]} />
                     
-                    {/* <Profile position={[radius * Math.cos(2 * Math.PI * (900) / 1200),0,radius * Math.sin(2 * Math.PI * (900) / 1200) - 100]} /> */}
+                    <Profile position={[radius * Math.cos(2 * Math.PI * (900) / 1200),0,radius * Math.sin(2 * Math.PI * (900) / 1200) - 100]} />
                     <Challenge position={[radius * Math.cos(2 * Math.PI * (600) / 1200),-20,radius * Math.sin(2 * Math.PI * (600) / 1200) - 100]} />
                     <About position={[radius * Math.cos(2 * Math.PI * (300) / 1200),-20,radius * Math.sin(2 * Math.PI * (300) / 1200) - 100]} />
 

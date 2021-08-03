@@ -17,7 +17,14 @@ app.post('/register', (req, res)=>{
     bcrypt.hash(usr.password, 9).then((hash)=>{
         usr.password = hash;
         usr.save().then((doc)=>{
-            res.json({status: true, doc});
+            var payload = {
+                username: doc.username,
+                _id: doc._id,
+                streak: doc.streak,
+                dailyQuestion: doc.dailyQuestion,
+            }
+            var token = jwt.sign(payload, process.env.jwtToken);
+            res.json({status: true, doc,token});
         }).catch((error)=>{
             console.log(error);
             res.json({status: false, error: "Database Error Ouccered"});
@@ -61,7 +68,49 @@ app.post('/updateuser',(req,res)=>{
             institution: user.institution,
             bio: user.bio
         }
-    }).then(res => res.json()).then((result,err)=> {res.json(true)}).catch(err => {res.json(false)});
+    }).then(res => res.json()).then((result,err)=> {res.json(result)}).catch(err => {res.json(false)});
+})
+
+app.post('/check_user',(req,res) => {
+    User.findOne({username: { $regex: new RegExp("^" + req.body.username.toLowerCase(), "i") }}).then((doc)=>{
+        if(doc){
+            res.json({
+                status: true,
+            })
+        }
+        else{
+            res.json({
+                status: false,
+                error: "User Does not Exist"
+            })
+        }
+    }).catch(err => {
+        res.json({
+            status: false,
+            error: "User Does not Exist"
+        })
+    })
+})
+
+app.post('/update_password',(req,res) => {
+    bcrypt.hash(req.body.password, 9).then((hash)=>{
+        User.updateOne({username: { $regex: new RegExp("^" + req.body.username.toLowerCase(), "i") }},{
+            $set: {
+                password: hash
+            }
+        }).then((result,err)=> {
+            if(result){
+                res.json(true)
+            }else{
+                res.json(false)
+            }
+            
+        }).catch(err => {console.log(err);res.json(false)});
+    }).catch((error)=>{
+        console.log(error);
+        res.json({status: false, error: "Internal Server Error"});
+    })
+    
 })
 
 app.get('/profile', (req, res)=>{

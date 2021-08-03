@@ -72,7 +72,17 @@ async function registrationProcess(username,password,country,institution,bio) {
             institution,
             bio
         })
-    }).then(res => res.json()).then((result) => {return result.status}).catch((err) => {return false});
+    }).then(res => res.json()).then((data) => {
+        console.log(data)
+        if(data.status){
+            window.localStorage.setItem("token",data.token);
+            return true;
+        }
+        else{
+            return false;
+            
+        }
+    }).catch((err) => {return false});
 }
 
 function getFirstName(username) {
@@ -88,9 +98,52 @@ function getFirstName(username) {
     })
 }
 
+async function UpdatePassword(username,password){
+    return fetch(config+'/api/users/update_password',{
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            password
+        })
+    }).then(res => res.json()).then(async (result) => {
+        if(result){
+            let lg = await loginProcess(username,password);
+            if(lg){
+                return true
+            }else{
+                return false;
+            }
+        }
+    }).catch(err => {
+        return false;
+    })
+}
+
+async function CheckUser(username){
+    return fetch(config+'/api/users/check_user',{
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            username
+        })
+    }).then(res => res.json()).catch(err => {
+        return {
+            status: false,
+            error: "User does not exists"
+        }
+    })
+}
+
 function logout() {
     window.localStorage.removeItem("token");
     window.location = '/'
 }
 
-export {getToken,TokenAuthentication,loginProcess,logout,getFirstName,registrationProcess,updateUser};
+export {getToken,TokenAuthentication,loginProcess,logout,getFirstName,registrationProcess,updateUser, CheckUser, UpdatePassword};
