@@ -116,7 +116,7 @@ function HomePage() {
                     <UpsolveText></UpsolveText>
                     <Leaderboard position={[radius * Math.cos(2 * Math.PI * (1200) / 1200),-20,radius * Math.sin(2 * Math.PI * (1200) / 1200) - 100]} />
                     
-                    <Profile position={[radius * Math.cos(2 * Math.PI * (900) / 1200),0,radius * Math.sin(2 * Math.PI * (900) / 1200) - 100]} />
+                    {/* <Profile position={[radius * Math.cos(2 * Math.PI * (900) / 1200),0,radius * Math.sin(2 * Math.PI * (900) / 1200) - 100]} /> */}
                     <Challenge position={[radius * Math.cos(2 * Math.PI * (600) / 1200),-20,radius * Math.sin(2 * Math.PI * (600) / 1200) - 100]} />
                     <About position={[radius * Math.cos(2 * Math.PI * (300) / 1200),-20,radius * Math.sin(2 * Math.PI * (300) / 1200) - 100]} />
 
