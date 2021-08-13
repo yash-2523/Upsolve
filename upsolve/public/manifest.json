@@ -4,19 +4,19 @@
   "description": "Help to be a better coder...",
   "icons": [
     {
-      "src": "UpsolveLogo.png",
-      "sizes": "128x128 64x64 32x32 24x24",
+      "src": "upsolve_logo_test.png",
+      "sizes": "569x543",
       "type": "image/png"
     },
     {
-      "src": "UpsolveLogo.png",
+      "src": "upsolve_logo_test.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "569x543"
     },
     {
-      "src": "UpsolveLogo.png",
+      "src": "upsolve_logo_test.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "569x543"
     }
   ],
   "start_url": ".",
