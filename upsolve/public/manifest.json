@@ -1,7 +1,7 @@
 {
   "short_name": "Upsolve",
   "name": "Upsolve",
-  "description": "Help to be a better coder...",
+  "description": "Upsolve is a platform designed to help you improve your competitive programming skills while also keeping a track of your progress.",
   "icons": [
     {
       "src": "upsolve_logo_test.png",

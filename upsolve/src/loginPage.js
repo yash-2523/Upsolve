@@ -1,7 +1,7 @@
 
 import fetch from 'node-fetch';
 import React, { useEffect, useState } from 'react';
-
+import MuiAlert from '@material-ui/lab/Alert';
 import NavigationMenu from './NavigationMenu';
 import BoxTitle from './BoxTitile';
 import {Link} from 'react-router-dom'
@@ -180,8 +180,8 @@ function LoginPage() {
 
             <NavigationMenu></NavigationMenu>
             {error !== false ? 
-            <div className="alert-heading text-center p-1 m-auto bg-danger text-light alert-animation" style={{width: "30%",borderRadius: "5px","fontSize": "1.2rem"}}>
-                {error}
+            <div className="text-center p-1 m-auto text-light alert-animation" style={{width: "30%",borderRadius: "5px","fontSize": "1.2rem"}}>
+                <MuiAlert variant="filled" severity="error">{error}</MuiAlert>
             </div> 
             
             : ''}
@@ -201,8 +201,8 @@ function LoginPage() {
                         
                         setisLoading(true);
                         let result = await loginProcess(username,password)
-                        e.target.previousSibling.childNodes[1].value = "";
-                        e.target.previousSibling.childNodes[3].value = "";
+                        e.target.previousSibling.previousSibling.childNodes[1].value = "";
+                        e.target.previousSibling.previousSibling.childNodes[3].value = "";
                         setisLoading(false);
                         if(!result || result === false){
                             console.log("Error", result)

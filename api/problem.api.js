@@ -12,7 +12,7 @@ let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
     RefillData();
 })
 
-// RefillData();
+RefillData();
 
 function RefillData() {
     
