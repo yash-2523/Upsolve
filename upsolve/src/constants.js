@@ -1,5 +1,5 @@
 let dev = {
-    url: "https://upsolve-backend.azurewebsites.net",
+    url: "https://upsolve-backend.vercel.app",
 }
 let prod = {
     url: "https://upsolve-backend.vercel.app",

@@ -4,7 +4,7 @@ export default function Team() {
 
     const [descnum,setdescNum] = useState(0);
     let description = [];
-    description.push(["Jay Mehta","orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."]);
+    description.push(["Jay Mehta","Jay Mehta, our versatile developer of upsolve. “Fools ignore complexity. Some can avoid it. Geniuses(he) remove it.”"]);
     description.push(["Shivam Thakker","Our 3D model wizard, Shivam Thakker, always on the search for the perfect!🔥."]);
     description.push(["Parshwa Shah","When he's not practicing backend development, Parshwa likes to ace on our project's backend development!!✨."]);
     description.push(["Yash Doshi","Dreams have only one master and our Upsolve galaxy has one and only one UI/UX master, Yash Doshi! 🤩."]);
