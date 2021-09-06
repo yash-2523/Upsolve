@@ -1,8 +1,8 @@
 let dev = {
-    url: "https://upsolve-backend.azurewebsites.net",
+    url: "http://20.198.103.171:4000",
 }
 let prod = {
-    url: "https://upsolve-backend.vercel.app",
+    url: "http://20.198.103.171:4000",
 }
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod;
