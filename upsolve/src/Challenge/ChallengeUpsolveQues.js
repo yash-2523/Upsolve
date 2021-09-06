@@ -20,7 +20,7 @@ function ChallengeUpsolveQues(props) {
     useEffect(()=>{
         if(upsolve >= 0){
             UpsolveQuestion(props).then((problem)=>{
-                
+                console.log("upsolve",problem)
                 if(problem === false){
                     setproblemError("Unable to fetch the Problem")
                     

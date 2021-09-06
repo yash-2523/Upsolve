@@ -18,6 +18,7 @@ function ChallengeDailyQues(props) {
     useEffect(()=>{
         if(!solved && solved !== ""){
             dailyQuestion(props).then((problem)=>{
+                console.log("daily",problem)
                 if(problem === false){
                     setproblemError("Unable to fetch the Problem")
                     
