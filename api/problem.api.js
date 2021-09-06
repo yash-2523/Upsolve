@@ -19,13 +19,21 @@ function RefillData() {
 
     fetch("https://codeforces.com/api/problemset.problems").then(res=>res.json()).then((data)=>{
         if(data.status == "OK"){
-            
-            data.result.problems.map(el=>{
-                el.hash = el.name+el.contestId+el.index;
-            })
-            Problem.insertMany(data.result.problems);
+            Problem.find({}).sort({'contestId': -1}).limit(1).lean().then(docs => {
+                var latest = docs[0].contestId;
+                var problems = data.result.problems.filter(el => {
+                    if(el.contestId > latest){
+                        return true;
+                    }
+                    return false;
+                });
+                var final = problems.map(el => {
+                    el.hash = el.name+el.contestId+el.index;
+                    return el;
+                });
+                Problem.insertMany(final);
+            })   
         }
-        
     })
 }
 
