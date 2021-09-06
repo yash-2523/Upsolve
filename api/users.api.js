@@ -12,6 +12,7 @@ let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
 UpdateData();
 
 app.post('/register', (req, res)=>{
+    req.body.username = req.body.username.toLowerCase();
     var usr = new User(req.body);
     
     bcrypt.hash(usr.password, 9).then((hash)=>{
@@ -36,7 +37,7 @@ app.post('/register', (req, res)=>{
 })
 
 app.post('/login', (req, res)=>{
-    User.findOne({username: { $regex: new RegExp("^" + req.body.username.toLowerCase(), "i") }}).then((doc)=>{
+    User.findOne({username: req.body.username.toLowerCase()}).then((doc)=>{
         if(doc){
             bcrypt.compare(req.body.password, doc.password).then((check)=>{
                 if(check){
@@ -72,7 +73,7 @@ app.post('/updateuser',(req,res)=>{
 })
 
 app.post('/check_user',(req,res) => {
-    User.findOne({username: { $regex: new RegExp("^" + req.body.username.toLowerCase(), "i") }}).then((doc)=>{
+    User.findOne({username: req.body.username.toLowerCase()}).then((doc)=>{
         if(doc){
             res.json({
                 status: true,
@@ -94,7 +95,7 @@ app.post('/check_user',(req,res) => {
 
 app.post('/update_password',(req,res) => {
     bcrypt.hash(req.body.password, 9).then((hash)=>{
-        User.updateOne({username: { $regex: new RegExp("^" + req.body.username.toLowerCase(), "i") }},{
+        User.updateOne({username: req.body.username.toLowerCase()},{
             $set: {
                 password: hash
             }
@@ -123,7 +124,7 @@ app.get('/getUser/:id',(req,res)=>{
     User.findById(req.params.id,'dailyQuestion UpsolveQuestion').then((user)=>{res.json(user)}).catch(err => {res.json(false)});
 })
 app.get('/getUserByname/:username',(req,res)=>{
-    User.findOne({username: { $regex: new RegExp("^" + req.params.username.toLowerCase(), "i") }}).then((user)=>{res.json(user)}).catch(err => {res.json(false)});
+    User.findOne({username: req.params.username.toLowerCase()}).then((user)=>{res.json(user)}).catch(err => {res.json(false)});
 })
 function UpdateData() {
     
