@@ -46,8 +46,8 @@ app.get('/list',(req,res)=>{
     })
 })
 
-function findAndFilter(res, solved, ratingStart,ratingEnd){
-    Problem.find({rating: {$gte: ratingStart, $lte: ratingEnd}}).lean().then((docs)=>{
+async function findAndFilter(solved, ratingStart,ratingEnd){
+    return Problem.find({rating: {$gte: ratingStart, $lte: ratingEnd}}).lean().then((docs)=>{
         const dc=[]
         for(let i = 0; i < docs.length; i++){
             let el = docs[i];
@@ -58,71 +58,108 @@ function findAndFilter(res, solved, ratingStart,ratingEnd){
             }
         }
         dc[0].link =`https://codeforces.com/problemset/problem/${dc[0].contestId}/${dc[0].index}`;
-        res.json(dc ? dc[0] : "invalid");
+        return (dc ? dc[0] : "invalid");
     })
 }
 
 app.get('/upsolve/:username', (req,res)=>{
     let solved = null;
-    fetch("https://codeforces.com/api/user.status?handle="+req.params.username).then(res=>res.json()).then((data)=>{
-        solved = new Map();
-        data.result.forEach((el,i)=>{
-            if(el.verdict==="OK"){
-                
-                solved.set(el.problem.name,true);
+    User.findOne({username: req.params.username.toLowerCase()}).populate('upsolve_Que').then((usr) => {
+        fetch("https://codeforces.com/api/user.status?handle="+req.params.username).then(res=>res.json()).then(async (data)=>{
+            solved = new Map();
+            data.result.forEach((el,i)=>{
+                if(el.verdict==="OK"){
+                    
+                    solved.set(el.problem.name,true);
+                }
+            });
+            if(!usr.upsolve_Que || (usr.upsolve_Que && solved.get(usr.upsolve_Que.name))){
+                // Check That Question :)
+                // Here
+                if(usr.upsolve_Que){
+                    await CheckQuestion({query: {username: usr.username, contestId: usr.upsolve_Que.contestId, index: usr.upsolve_Que.index, name: usr.upsolve_Que.name}, params: {type: "upsolve"}});
+                }
+                fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res => res.json()).then(async (rates)=>{
+                    let rating = rates.result[rates.result.length-1].newRating || 800;
+                    if(rating < 800){
+                        rating = 800;
+                    }
+                    if(rating >= 2700){
+                        rating = 2300;
+                    }
+                    let ratingStart = rating+200,ratingEnd = rating+400;
+                    let prob = await findAndFilter(solved,  ratingStart,ratingEnd);
+                    usr.upsolve_Que = prob._id;
+                    usr.save();
+                    res.json(prob);
+                }).catch(async (err) => {
+                    let rating = 800;
+                    let ratingStart = rating+200,ratingEnd = rating+400;
+                    let prob = await findAndFilter(solved, ratingStart,ratingEnd);
+                    usr.upsolve_Que = prob._id;
+                    usr.save();
+                    res.json(prob);
+                });
+            }else{
+                var dc = usr.upsolve_Que;
+                dc.link = `https://codeforces.com/problemset/problem/${dc.contestId}/${dc.index}`;
+                res.json(dc);
             }
-        });
-        fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res => res.json()).then((rates)=>{
-            let rating = rates.result[rates.result.length-1].newRating || 800;
-            if(rating < 800){
-                rating = 800;
-            }
-            if(rating >= 2700){
-                rating = 2300;
-            }
-            let ratingStart = rating+200,ratingEnd = rating+400;
-            findAndFilter(res, solved,  ratingStart,ratingEnd);
-        }).catch(err => {
-            let rating = 800;
-            let ratingStart = rating+200,ratingEnd = rating+400;
-            findAndFilter(res, solved, ratingStart,ratingEnd);
-        });
-    }).catch(err => {res.json(false)});
-    
+        }).catch(err => {console.log(err); res.json(false)});
+    });
 })
 
 app.get('/dailyques/:username', (req,res)=>{
     let solved = null;
-    fetch("https://codeforces.com/api/user.status?handle="+req.params.username).then(res => res.json()).then((data)=>{
-        solved = new Map();
-        data.result.forEach((el,i)=>{
-            if(el.verdict==="OK"){
-                
-                solved.set(el.problem.name,true);
+    User.findOne({username: req.params.username.toLowerCase()}).populate('daily_Que').then((usr) => {
+        fetch("https://codeforces.com/api/user.status?handle="+req.params.username).then(res => res.json()).then(async (data)=>{
+            solved = new Map();
+            data.result.forEach((el,i)=>{
+                if(el.verdict==="OK"){
+                    
+                    solved.set(el.problem.name,true);
+                }
+            });
+            if(!usr.daily_Que || (usr.daily_Que && solved.get(usr.daily_Que))){
+                // Check for problem
+                // Here
+                if(usr.daily_Que){
+                    await CheckQuestion({query: {username: usr.username, contestId: usr.daily_Que.contestId, index: usr.daily_Que.index, name: usr.daily_Que.name}, params: {type: "dailyques"}});
+                }
+                // New Problem finding
+                fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res=>res.json()).then(async (rates)=>{
+                    let rating = rates.result[rates.result.length-1].newRating || 800;
+                    if(rating < 800){
+                        rating = 800;
+                    }
+                    if(rating >= 2700){
+                        rating = 2300;
+                    }
+                    let ratingStart = rating-100,ratingEnd = rating+100;
+                    let problem = await findAndFilter(solved, ratingStart,ratingEnd);
+                    usr.daily_Que = problem._id;
+                    usr.save();
+                    res.json(problem);
+                }).catch(async err => {
+                    let rating = 800;
+                    let ratingStart = rating,ratingEnd = rating+100;
+                    let problem = await findAndFilter(solved, ratingStart,ratingEnd);
+                    usr.daily_Que = problem._id;
+                    usr.save();
+                    res.json(problem);
+                });
+            }else{
+                var dc = usr.daily_Que;
+                dc.link = `https://codeforces.com/problemset/problem/${dc.contestId}/${dc.index}`;
+                res.json(dc);
             }
-        });
-        fetch("https://codeforces.com/api/user.rating?handle="+req.params.username).then(res=>res.json()).then((rates)=>{
-            let rating = rates.result[rates.result.length-1].newRating || 800;
-            if(rating < 800){
-                rating = 800;
-            }
-            if(rating >= 2700){
-                rating = 2300;
-            }
-            let ratingStart = rating-100,ratingEnd = rating+100;
-            findAndFilter(res, solved, ratingStart,ratingEnd);
-        }).catch(err => {
-            let rating = 800;
-            let ratingStart = rating,ratingEnd = rating+100;
-            findAndFilter(res, solved, ratingStart,ratingEnd);
-        });
-    }).catch(err => {res.json(false)});
-    
+        }).catch(err => {res.json(false)});
+
+    });
 })
 
-app.get('/check/:type',(req,res)=>{
-    
-    fetch("https://codeforces.com/api/user.status?handle="+req.query.username).then(res => res.json()).then(async (data)=>{
+async function CheckQuestion(req){
+    return fetch("https://codeforces.com/api/user.status?handle="+req.query.username).then(res => res.json()).then(async (data)=>{
         let problem = {
             contestId:req.query.contestId,
             name:req.query.name,
@@ -177,12 +214,18 @@ app.get('/check/:type',(req,res)=>{
                     
                     }).then((result,err) => {})
                 }
-                return res.json(true);
+                return true;
                 
             }
         }
-        res.json(false);
-    }).catch(err => {res.json(false)})
+        return false;
+        
+    }).catch(err => (false));
+}
+
+app.get('/check/:type',async (req,res)=>{
+    
+    res.json(await CheckQuestion(req));
 })
 
 

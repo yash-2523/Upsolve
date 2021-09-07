@@ -14,6 +14,8 @@ var UserSchema = new mongoose.Schema({
         type:String,
         
     },
+    daily_Que: {type: String, ref: 'problem'},
+    upsolve_Que: {type: String, ref: 'problem'},
     email: {
         type: String,
     },
