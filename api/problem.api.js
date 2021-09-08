@@ -122,10 +122,12 @@ app.get('/dailyques/:username', (req,res)=>{
                     solved.set(el.problem.name,true);
                 }
             });
-            if(!usr.daily_Que || (usr.daily_Que && solved.get(usr.daily_Que))){
+            if(!usr.daily_Que || (usr.daily_Que && solved.get(usr.daily_Que.name))){
                 // Check for problem
                 // Here
+                
                 if(usr.daily_Que){
+                    
                     await CheckQuestion({query: {username: usr.username, contestId: usr.daily_Que.contestId, index: usr.daily_Que.index, name: usr.daily_Que.name}, params: {type: "dailyques"}});
                 }
                 // New Problem finding
@@ -176,7 +178,6 @@ async function CheckQuestion(req){
         let result = data.result;
         for(let i=0;i<result.length;i++){
             if((problem.contestId == result[i].problem.contestId || problem.name == result[i].problem.name) && problem.index == result[i].problem.index && result[i].verdict === "OK"){
-                
                 if(req.params.type === "upsolve"){
                     let today = new Date();
                     let date = `${today.getDate()}`+"-"+`${(parseInt(today.getMonth()+1))}`+"-"+`${today.getFullYear()}`;
@@ -214,7 +215,13 @@ async function CheckQuestion(req){
                             
                         
                     
-                    }).then((result,err) => {})
+                    }).then((result,err) => {
+                        if(err){
+                            console.log(err);
+                        }else{
+                            console.log(result)
+                        }
+                    })
                 }
                 return true;
                 
