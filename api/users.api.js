@@ -9,7 +9,6 @@ const schedule = require('node-schedule');
 let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
     UpdateData();
 })
-// UpdateData();
 
 app.post('/register', (req, res)=>{
     req.body.username = req.body.username.toLowerCase();
@@ -126,15 +125,15 @@ app.get('/getUser/:id',(req,res)=>{
 app.get('/getUserByname/:username',(req,res)=>{
     User.findOne({username: req.params.username.toLowerCase()}).then((user)=>{res.json(user)}).catch(err => {res.json(false)});
 })
-function UpdateData() {
+async function UpdateData() {
     
 
-    User.updateMany({dailyQuestion: false},{
+    await User.updateMany({dailyQuestion: false},{
         $set:{
             streak: 0
         }
     }).then((result,err) => {});
-    User.updateMany({},{
+    await User.updateMany({},{
         $set:{
             dailyQuestion: false,
             UpsolveQuestion: 0
