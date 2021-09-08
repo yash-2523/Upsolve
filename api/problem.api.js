@@ -65,6 +65,7 @@ async function findAndFilter(solved, ratingStart,ratingEnd){
 app.get('/upsolve/:username', (req,res)=>{
     let solved = null;
     User.findOne({username: req.params.username.toLowerCase()}).populate('upsolve_Que').then((usr) => {
+        
         fetch("https://codeforces.com/api/user.status?handle="+req.params.username).then(res=>res.json()).then(async (data)=>{
             solved = new Map();
             data.result.forEach((el,i)=>{
@@ -101,7 +102,7 @@ app.get('/upsolve/:username', (req,res)=>{
                     res.json(prob);
                 });
             }else{
-                var dc = usr.upsolve_Que;
+                var dc = JSON.parse(JSON.stringify(usr.upsolve_Que));
                 dc.link = `https://codeforces.com/problemset/problem/${dc.contestId}/${dc.index}`;
                 res.json(dc);
             }
@@ -112,6 +113,7 @@ app.get('/upsolve/:username', (req,res)=>{
 app.get('/dailyques/:username', (req,res)=>{
     let solved = null;
     User.findOne({username: req.params.username.toLowerCase()}).populate('daily_Que').then((usr) => {
+        
         fetch("https://codeforces.com/api/user.status?handle="+req.params.username).then(res => res.json()).then(async (data)=>{
             solved = new Map();
             data.result.forEach((el,i)=>{
@@ -138,18 +140,18 @@ app.get('/dailyques/:username', (req,res)=>{
                     let ratingStart = rating-100,ratingEnd = rating+100;
                     let problem = await findAndFilter(solved, ratingStart,ratingEnd);
                     usr.daily_Que = problem._id;
-                    usr.save();
+                    await usr.save();
                     res.json(problem);
                 }).catch(async err => {
                     let rating = 800;
                     let ratingStart = rating,ratingEnd = rating+100;
                     let problem = await findAndFilter(solved, ratingStart,ratingEnd);
                     usr.daily_Que = problem._id;
-                    usr.save();
+                    await usr.save();
                     res.json(problem);
                 });
             }else{
-                var dc = usr.daily_Que;
+                var dc = JSON.parse(JSON.stringify(usr.daily_Que));
                 dc.link = `https://codeforces.com/problemset/problem/${dc.contestId}/${dc.index}`;
                 res.json(dc);
             }
