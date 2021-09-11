@@ -121,7 +121,6 @@ app.get('/upsolve/:username', (req,res)=>{
 app.get('/dailyques/:username', (req,res)=>{
     let solved = null;
     User.findOne({username: req.params.username.toLowerCase()}).populate('daily_Que').then((usr) => {
-        console.log(usr)
         fetch("https://codeforces.com/api/user.status?handle="+req.params.username).then(res => res.json()).then(async (data)=>{
             solved = new Map();
             data.result.forEach((el,i)=>{
@@ -130,13 +129,10 @@ app.get('/dailyques/:username', (req,res)=>{
                     solved.set(el.problem.name,true);
                 }
             });
-            console.log(solved);
             if(!usr.daily_Que || (usr.daily_Que && solved.get(usr.daily_Que.name))){
                 // Check for problem
                 // Here
-                console.log("here")
                 if(usr.daily_Que){
-                    console.log("check")
                     await CheckQuestion({query: {username: usr.username, contestId: usr.daily_Que.contestId, index: usr.daily_Que.index, name: usr.daily_Que.name}, params: {type: "dailyques"}});
                 }
                 // New Problem finding
