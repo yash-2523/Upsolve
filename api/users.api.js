@@ -6,7 +6,10 @@ const User = mongoose.model('user');
 const jwt = require('jsonwebtoken');
 const schedule = require('node-schedule');
 
-let RefreshData = schedule.scheduleJob("00 00 00 * * *",() => {
+let RefreshData = schedule.scheduleJob("00 30 18 * * *",() => {
+    var now = new Date();
+    // convert date to a string in UTC timezone format:
+    console.log(now.toUTCString());
     UpdateData();
 })
 
