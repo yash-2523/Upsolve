@@ -4,13 +4,15 @@ function ChallengeTimer() {
     const [timer,settimer] = useState(new Date());
 
     useEffect(()=>{
-        setInterval(()=>{settimer(new Date())},1000);
+        setInterval(()=>{
+            settimer(new Date())
+        },1000);
         
     },[]);
 
     let getHours = () =>{
         
-        let hours = parseInt(23 - timer.getHours());
+        let hours = parseInt(23 - timer.getUTCHours());
         if(hours < 10){
             hours = "0"+hours;
         }
@@ -18,7 +20,7 @@ function ChallengeTimer() {
     }
     let getMinutes = () =>{
         
-        let minutes = parseInt(59 - timer.getMinutes());
+        let minutes = parseInt(59 - timer.getUTCMinutes());
         if(minutes < 10){
             minutes = "0"+minutes;
         }
@@ -26,7 +28,7 @@ function ChallengeTimer() {
     }
     let getSeconds = () =>{
         
-        let seconds = parseInt(59 - timer.getSeconds());
+        let seconds = parseInt(59 - timer.getUTCSeconds());
         if(seconds < 10){
             seconds = "0"+seconds;
         }

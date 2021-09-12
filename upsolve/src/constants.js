@@ -1,5 +1,5 @@
 let dev = {
-    url: "http://localhost:4000",
+    url: "https://20.198.103.171",
 }
 let prod = {
     url: "https://20.198.103.171",
