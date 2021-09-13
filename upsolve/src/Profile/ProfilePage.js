@@ -9,6 +9,7 @@ function  ProfilePage(props) {
     country_list.getNames().map((country) => {
         countries.push(<option value={country}>{country}</option>)
     })
+    console.log(props)
     const [isloading,setisloading] = useState(false);
     const firstName = useRef(null);
     const lastName = useRef(null);

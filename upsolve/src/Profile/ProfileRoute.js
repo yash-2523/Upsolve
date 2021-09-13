@@ -7,7 +7,7 @@ import {getToken,TokenAuthentication} from '../Api/auth.api'
 function ProfileRoute(props) {
     
     const [user,setuser] = useState({});
-    const paramUsername = props.match.params.username;
+    const paramUsername = props.match.params.username.toLowerCase();
     const [loggedinUser,setloggedinUser] = useState(false)
     
 
@@ -28,7 +28,7 @@ function ProfileRoute(props) {
             else{
                 let loggedinUsername = null;
                 if(getToken()){
-                    loggedinUsername = TokenAuthentication().username;      
+                    loggedinUsername = TokenAuthentication().username.toLowerCase();      
                 }
                 if(loggedinUsername === User.username){
                     setloggedinUser(true);
