@@ -93,7 +93,7 @@ app.get('/upsolve/:username', (req,res)=>{
                     usr.upsolve_Que = prob._id;
                     await User.updateOne({username: req.params.username.toLowerCase()},{
                         $set: {
-                            upsolve_Que: problem._id
+                            upsolve_Que: prob._id
                         }
                     })
                     res.json(prob);
@@ -104,7 +104,7 @@ app.get('/upsolve/:username', (req,res)=>{
                     usr.upsolve_Que = prob._id;
                     await User.updateOne({username: req.params.username.toLowerCase()},{
                         $set: {
-                            upsolve_Que: problem._id
+                            upsolve_Que: prob._id
                         }
                     })
                     res.json(prob);
